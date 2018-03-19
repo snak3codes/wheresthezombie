@@ -19,7 +19,6 @@
             font-size: 22px;
             font-family: cursive;
         }
-
     </style>
 
     <!-- This code titles the web browser page -->
@@ -36,6 +35,7 @@
 
     <script>
         var zombie_map;
+        var old_position;
         var all_markers = [];
         var data = `43.66701792141259 -79.82915997505188 Zombie.png
 
@@ -50,6 +50,12 @@
         var markers = data.split("\n");
 
         function initMap() {
+            old_position = new google.maps.Marker({
+                lat: 43.668111,
+                lng: -79.826464
+            });
+
+
             zombie_map = new google.maps.Map(document.getElementById('zombie_map'), {
                 zoom: 17,
                 center: {
@@ -91,6 +97,7 @@
         }
 
         function set_my_position(position) {
+            old_position.setMap(null);
             var emoji = "Player.png"
             var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             var marker = new google.maps.Marker({
@@ -98,9 +105,8 @@
                 map: zombie_map,
                 icon: emoji
             });
-
+            old_position = marker;
         }
-
     </script>
 
 
