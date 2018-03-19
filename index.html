@@ -1,39 +1,43 @@
 <! DOCTYPE HTML>
 
 <html>
-  <head>
 
-<!-- This part creates the map to fill 100% of the browser and the background would show as grey if the map doesn't load up-->
-<style>
-  #zombie_map {
-    height: 100%;
-    width: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;  
-    background-color: grey;
-    }
-    h1 {
-        font-size: 22px;
-        font-family: cursive;
-    }
-</style>
+<head>
 
-<!-- This code titles the web browser page -->
+    <!-- This part creates the map to fill 100% of the browser and the background would show as grey if the map doesn't load up-->
+    <style>
+        #zombie_map {
+            height: 100%;
+            width: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            background-color: grey;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-family: cursive;
+        }
+
+    </style>
+
+    <!-- This code titles the web browser page -->
     <title>Zombie Apocalypse Game</title>
 
-  </head>
-  <body>
-      <h1>My zombie map</h1>
+</head>
 
-<!-- This line allows id to be used to target a specific element whenever it is tagged in this case the div containing the map-->
-      <div id="zombie_map" ></div>    
+<body>
+    <h1>My zombie map</h1>
+
+    <!-- This line allows id to be used to target a specific element whenever it is tagged in this case the div containing the map-->
+    <div id="zombie_map"></div>
 
 
-	<script>
-    	  var zombie_map;
-	  var all_markers = [];
-	  var data = `43.66701792141259 -79.82915997505188 Zombie.png
+    <script>
+        var zombie_map;
+        var all_markers = [];
+        var data = `43.66701792141259 -79.82915997505188 Zombie.png
 
 		43.667762959502085 -79.829181432724 Zombie.png
 
@@ -42,78 +46,66 @@
 		43.66782504559211 -79.8245358467102 Swords.png
 
 		43.66936165585671 -79.82427835464478 Hospital.png`;
-  
-	 var markers = data.split("\n");
 
-   function initMap() {	  
+        var markers = data.split("\n");
+
+        function initMap() {
             zombie_map = new google.maps.Map(document.getElementById('zombie_map'), {
-            zoom: 17,
-            center: {lat: 43.668111, lng: -79.826464}
+                zoom: 17,
+                center: {
+                    lat: 43.668111,
+                    lng: -79.826464
+                }
             });
 
 
-	   if(navigator.geolocation) {
-    	     navigator.geolocation.watchPosition(set_my_position);
-	   }
-	   else {
-    	     alert("Geolocation doesn't work in your browser");
-	   }
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(set_my_position);
+            } else {
+                alert("Geolocation doesn't work in your browser");
+            }
 
 
 
-     	 for(var i=0; i < markers.length; i++){
-       		document.write(markers[i] + "<br>");
+            for (var i = 0; i < markers.length; i++) {
+                document.write(markers[i] + "<br>");
 
-  		var marker_data = markers[i].trim();
-	    	marker_data = marker_data.split(" ");
+                var marker_data = markers[i].trim();
+                marker_data = marker_data.split(" ");
 
-	  	var latitude = marker_data[0];
-	  	var longitude = marker_data[1];
-	  	var emoji = marker_data[2];
+                var latitude = marker_data[0];
+                var longitude = marker_data[1];
+                var emoji = marker_data[2];
 
-	  	var marker_position = new google.maps.LatLng( marker_data[0], marker_data[1]);
+                var marker_position = new google.maps.LatLng(marker_data[0], marker_data[1]);
 
-		var marker = new google.maps.Marker({
+                var marker = new google.maps.Marker({
 
- 	   	position: marker_position,
- 	   	map: zombie_map,
- 	   	icon: emoji 
-		});
-		
-    		all_markers.push(marker);
-	}
-}
+                    position: marker_position,
+                    map: zombie_map,
+                    icon: emoji
+                });
 
-  	function set_my_position (position){
-	  var emoji = "player.png"
-	  var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-	  var marker = new google.maps.Marker({
-	    position: pos,
-	    map: zombie_map,
-	    icon: emoji
-	});	
-	
-	}
-   
-</script>
-    Items I want to appear on my page will go here
+                all_markers.push(marker);
+            }
+        }
 
-<!-- This line uses my api key to create the actual Google map returning it to the initMap function at the beginning of the code-->
-    <script async defer
-      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoURNQt1JYCxk7A-nQ-Ktdt9TKFkv6jyQ&callback=initMap&libraries=geometry">
+        function set_my_position(position) {
+            var emoji = "player.png"
+            var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            var marker = new google.maps.Marker({
+                position: pos,
+                map: zombie_map,
+                icon: emoji
+            });
+
+        }
+
     </script>
-  </body>
+
+
+    <!-- This line uses my api key to create the actual Google map returning it to the initMap function at the beginning of the code-->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoURNQt1JYCxk7A-nQ-Ktdt9TKFkv6jyQ&callback=initMap&libraries=geometry"></script>
+</body>
+
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
