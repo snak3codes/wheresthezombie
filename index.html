@@ -15,10 +15,6 @@
             background-color: grey;
         }
 
-        h1 {
-            font-size: 22px;
-            font-family: cursive;
-        }
     </style>
 
     <!-- This code titles the web browser page -->
@@ -35,6 +31,8 @@
 
     <script>
         var zombie_map;
+        var score;
+        var tolerance;
         var old_position;
         var all_markers = [];
         var data = `43.66701792141259 -79.82915997505188 Zombie.png
@@ -96,6 +94,7 @@
             }
         }
 
+
         function set_my_position(position) {
             old_position.setMap(null);
             var emoji = "Player.png"
@@ -106,7 +105,34 @@
                 icon: emoji
             });
             old_position = marker;
+            for (var i = 0; i < all_markers.length; i++) {
+                var distance = google.maps.geometry.spherical.computeDistanceBetween(pos, all_markers[i].getPosition());
+
+            }
+            if (distance < tolerance) {
+
+                // This finds out the name of the icon
+                alert("Found it!");
+                var what_is_it = all_markers[i].getIcon();
+                what_is_it = what_is_it.replace(".png", "");
+                alert("Found the " + what_is_it);
+                if (what_is_it == "Zombie") {
+                    alert("You've encountered a zombie, they are your enemies. Stay out of the area!!!")
+                } else if (what_is_it == "Hospital") {
+                    alert("You are in a safe location at a hospital. You rest for a while and you find a first aid kit and some bandages");
+                } else if (what_is_it == "Swords") {
+                    alert("Good Job! You've found some weapons, and you feel safer to wander around JASS. You have an M4-A1 with 25 bullets in the magazine!")
+                }
+                all_markers[i].setMap(null);
+                // This code changes the player's score to +10 points if the item found is not zombie
+                if (what_is_it != "Zombie") {
+                    score += 10;
+                    alert('Your score is ' + score);
+                }
+            }
+
         }
+
     </script>
 
 
